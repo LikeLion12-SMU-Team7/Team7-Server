@@ -1,9 +1,7 @@
 package com.example.alcohol_free_day.security.jwt.user;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import com.example.alcohol_free_day.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

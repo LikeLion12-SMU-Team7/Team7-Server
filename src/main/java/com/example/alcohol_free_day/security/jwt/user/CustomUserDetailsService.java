@@ -1,7 +1,7 @@
 package com.example.alcohol_free_day.security.jwt.user;
 
-import com.example.alcohol_free_day.domain.entity.User;
-import com.example.alcohol_free_day.domain.repository.UserRepository;
+import com.example.alcohol_free_day.domain.user.entity.User;
+import com.example.alcohol_free_day.domain.user.repository.UserRepository;
 import com.example.alcohol_free_day.global.common.code.status.ErrorStatus;
 import com.example.alcohol_free_day.global.common.exception.GeneralException;
 import org.springframework.security.core.userdetails.UserDetails;
