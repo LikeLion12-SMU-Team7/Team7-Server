@@ -37,6 +37,12 @@ public class ApiResponse<T> {
         return new ApiResponse<>(false, code, message, data);
     }
 
+    // 데이터 없이 실패한 경우 응답 생성
+    public static <T> ApiResponse<T> onFailure(String code, String message) {
+        return new ApiResponse<>(false, code, message, null);
+    }
+
+    // 기본 실패 응답 생성
     public static <T> ApiResponse<T> onFailure(T result) {
         return new ApiResponse<>(false, ErrorStatus._BAD_REQUEST.getCode(),
                 ErrorStatus._BAD_REQUEST.getMessage(), result);
