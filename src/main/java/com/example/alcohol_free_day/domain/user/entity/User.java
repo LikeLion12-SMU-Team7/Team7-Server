@@ -57,7 +57,12 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() { // name이 아닌 email 반환
         return email;
     }
 
