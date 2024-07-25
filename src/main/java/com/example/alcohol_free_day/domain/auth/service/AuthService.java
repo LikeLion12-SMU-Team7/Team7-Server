@@ -4,6 +4,7 @@ import com.example.alcohol_free_day.domain.auth.dto.AuthRequest;
 import com.example.alcohol_free_day.domain.auth.dto.AuthResponse;
 import com.example.alcohol_free_day.domain.auth.dto.JoinUserRequest;
 import com.example.alcohol_free_day.domain.user.entity.User;
+import com.example.alcohol_free_day.domain.user.entity.enums.Gender;
 import com.example.alcohol_free_day.domain.user.repository.UserRepository;
 import com.example.alcohol_free_day.global.common.code.status.ErrorStatus;
 import com.example.alcohol_free_day.global.common.exception.GeneralException;
@@ -40,8 +41,14 @@ public class AuthService {
         var user = User.builder()
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
+                .nickname(request.nickname())
+                .gender(Gender.valueOf(request.gender()))
+                .birthDate(request.birthDate())
+                .weight(request.weight())
+                .sojuAmount(request.sojuAmount())
+                .point(10L)
                 .build();
-        var savedUser = userRepository.save(user);
+        userRepository.save(user);
     }
 
     public AuthResponse authenticate(AuthRequest request) {

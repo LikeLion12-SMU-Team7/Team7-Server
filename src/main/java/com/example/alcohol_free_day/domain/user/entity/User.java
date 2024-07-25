@@ -3,6 +3,7 @@ package com.example.alcohol_free_day.domain.user.entity;
 import com.example.alcohol_free_day.domain.history.entity.History;
 import com.example.alcohol_free_day.domain.memory.entity.Memory;
 import com.example.alcohol_free_day.domain.report.entity.Report;
+import com.example.alcohol_free_day.domain.user.dto.UserRequest;
 import com.example.alcohol_free_day.domain.user.entity.enums.Gender;
 import com.example.alcohol_free_day.domain.user.entity.enums.UserStatus;
 import com.example.alcohol_free_day.global.common.BaseEntity;
@@ -50,6 +51,13 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<History> historyList = new ArrayList<>();
+
+    public void updateProfile(UserRequest request) {
+        this.nickname = request.nickname();
+        this.gender = Gender.valueOf(request.gender());
+        this.birthDate = request.birthDate();
+        this.weight = request.weight();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
