@@ -19,6 +19,10 @@ public enum ErrorStatus implements BaseErrorCode {
     // User 에러
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "USER400", "사용자가 존재하지 않습니다."),
     _INVALID_USER(HttpStatus.BAD_REQUEST, "USER401" , "아이디 또는 비밀번호가 틀렸습니다."),
+    _NOT_ENOUGH_POINT(HttpStatus.NOT_ACCEPTABLE, "USER402", "보유 포인트가 부족합니다."),
+
+    // Memory 에러
+    _NOT_FOUND_MEMORY(HttpStatus.NOT_FOUND, "MEMORY400", "흑역사가 존재하지 않습니다."),
 
     // Security 에러
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "SEC4001", "잘못된 형식의 토큰입니다."),
