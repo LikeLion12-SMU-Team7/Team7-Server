@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface HistoryRepository extends JpaRepository<History, Long> {
     List<History> findByUserAndDateAfter(User user, Date oneWeekAgo);
+
+    List<History> findAllByUser(User user);
 }
