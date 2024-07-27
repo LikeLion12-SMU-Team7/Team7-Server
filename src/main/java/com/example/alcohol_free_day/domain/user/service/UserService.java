@@ -92,6 +92,7 @@ public class UserService {
                 .wineConsumption(request.wineConsumption())
                 .beerConsumption(request.beerConsumption())
                 .makgeolliConsumption(request.makgeolliConsumption())
+                .user(user)
                 .build();
 
         historyRepository.save(history);
