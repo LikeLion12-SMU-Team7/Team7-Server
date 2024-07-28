@@ -75,11 +75,12 @@ public class GptService {
         StringBuilder builder = new StringBuilder();
         builder.append("내가 취할 정도의 주량은 소주 " + user.getSojuAmount() + "잔이고, ");
         builder.append("내가 근 일주일간 섭취한 알코올 총량은 " + totalConsumption + "g야. ");
-        builder.append("적절한 음주 습관을 위해 어떻게 조절하면 좋을지 계획을 짜줘.\n\n");
+        builder.append("적절한 음주 습관을 위해 어떻게 조절하면 좋을지 계획을 짜줘. 그리고 존댓말로 답변 해줘.\n\n");
 
         JsonNode jsonNode = callChatGpt(builder.toString());
         String gptResponse = jsonNode.path("choices").get(0).path("message").path("content").asText();
 
+        //TODO DB 저장 에러. 타입 수정 필요
         Report report = Report.builder()
                 .content(gptResponse)
                 .user(user)

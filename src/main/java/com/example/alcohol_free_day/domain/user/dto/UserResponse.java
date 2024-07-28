@@ -88,7 +88,7 @@ public record UserResponse(
 
     @Builder
     public record Calendar(
-            Date when,
+            Date date,
             Float totalConsumption
     ) {}
 }

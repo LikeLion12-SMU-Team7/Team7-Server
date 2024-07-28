@@ -7,7 +7,7 @@ public class HistoryConverter {
 
     public static UserResponse.Calendar toCalendarDto(History history) {
         return UserResponse.Calendar.builder()
-                .when(history.getDate())
+                .date(history.getDate())
                 .totalConsumption(history.getSojuConsumption()
                         + history.getWineConsumption()
                         + history.getBeerConsumption()
