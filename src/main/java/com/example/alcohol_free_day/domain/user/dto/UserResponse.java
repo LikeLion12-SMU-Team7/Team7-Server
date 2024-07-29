@@ -25,7 +25,7 @@ public record UserResponse(
     @Builder
     public record History(
             List<Calendar> calendarList,
-            HistoryUserInfo info
+            String memoryPreview
     ) {}
 
     @Builder
@@ -78,12 +78,6 @@ public record UserResponse(
             Long alcoholFreeDays,
             // 보유 포인트
             Long point
-    ) {}
-
-    @Builder
-    public record HistoryUserInfo(
-            // 가장 최근 흑역사 프리뷰
-            String content
     ) {}
 
     @Builder

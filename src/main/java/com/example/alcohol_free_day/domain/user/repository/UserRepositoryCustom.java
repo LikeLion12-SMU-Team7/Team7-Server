@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepositoryCustom {
     UserResponse.HomeUserInfo findHomeInfo(User user);
 
-    UserResponse.HistoryUserInfo findHistoryInfo(User user);
-
     UserResponse.WeeklyStatistics findWeeklyStatistics(User user);
 
     UserResponse.MonthlyStatistics findMonthlyStatistics(User user);

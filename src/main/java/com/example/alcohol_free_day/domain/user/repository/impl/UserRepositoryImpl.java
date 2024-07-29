@@ -71,11 +71,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public UserResponse.HistoryUserInfo findHistoryInfo(User user) {
-        return null;
-    }
-
-    @Override
     public UserResponse.WeeklyStatistics findWeeklyStatistics(User user) {
         return null;
     }

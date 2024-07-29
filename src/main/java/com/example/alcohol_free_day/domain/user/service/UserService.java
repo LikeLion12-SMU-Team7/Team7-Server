@@ -3,6 +3,8 @@ package com.example.alcohol_free_day.domain.user.service;
 import com.example.alcohol_free_day.domain.history.converter.HistoryConverter;
 import com.example.alcohol_free_day.domain.history.entity.History;
 import com.example.alcohol_free_day.domain.history.repository.HistoryRepository;
+import com.example.alcohol_free_day.domain.memory.entity.Memory;
+import com.example.alcohol_free_day.domain.memory.repository.MemoryRepository;
 import com.example.alcohol_free_day.domain.user.dto.UserRequest;
 import com.example.alcohol_free_day.domain.user.dto.UserResponse;
 import com.example.alcohol_free_day.domain.user.entity.User;
@@ -22,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final HistoryRepository historyRepository;
+    private final MemoryRepository memoryRepository;
 
     public UserResponse getProfile(User user) {
         return UserResponse.builder()
@@ -69,11 +72,12 @@ public class UserService {
         List<History> historyList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
-        UserResponse.HistoryUserInfo historyInfo = userRepository.findHistoryInfo(user);
+        Memory memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user);
+
 
         return UserResponse.History.builder()
                 .calendarList(calendarList)
-                .info(historyInfo)
+                .memoryPreview(memory.getContent())
                 .build();
     }
 
