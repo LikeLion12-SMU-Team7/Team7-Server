@@ -70,7 +70,7 @@ public record UserResponse(
 
     @Builder
     public record HomeUserInfo(
-            // 나의 성별, 연령 적정량 (한 주 음주량)
+            // 나의 성별, 연령 적정량 (한 달 음주량)
             Float monthlyConsumption,
             // 이번 달 예상 지출액
             Long expectedCost,
