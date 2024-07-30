@@ -46,7 +46,8 @@ public class AuthService {
                 .birthDate(request.birthDate())
                 .weight(request.weight())
                 .sojuAmount(request.sojuAmount())
-                .point(10L)
+                //TODO 테스트용 10000포인트 -> 추후 10point로 변경
+                .point(10000L)
                 .build();
         userRepository.save(user);
     }
@@ -131,5 +132,9 @@ public class AuthService {
                 throw new NoSuchElementException("User not found for email: " + userEmail);
             }
         }
+    }
+
+    public boolean checkEmailExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

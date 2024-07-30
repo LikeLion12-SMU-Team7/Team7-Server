@@ -28,6 +28,14 @@ public class AuthController {
         return ApiResponse.onSuccess("회원가입 성공");
     }
 
+    @Operation(summary = "이메일 중복 검사 버튼", description = "회원가입 과정에서 이메일 중복 검사를 진행합니다.\ntrue = 이미 존재하는 이메일, false = 가입 가능한 이메일")
+    @GetMapping("/join/email-check/{email}")
+    public ApiResponse<?> checkEmailExists(
+            @PathVariable(name = "email") String email
+    ) {
+        return ApiResponse.onSuccess(authService.checkEmailExists(email));
+    }
+
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {
         return ApiResponse.onSuccess(authService.authenticate(request));

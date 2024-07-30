@@ -17,4 +17,8 @@ public record UserRequest(
             Float beerConsumption,
             Float makgeolliConsumption
     ) {}
+
+    public record NoneDrinkHistory(
+            Date date
+    ) {}
 }

@@ -31,16 +31,24 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record WeeklyStatistics(
+    public record WeeklyStatisticsCompared(
+            // 주종별 지난 주 대비 음주량
+            Float sojuDifference,
+            Float wineDifference,
+            Float beerDifference,
+            Float makgeolliDifference
+    ) {}
+
+    @Builder
+    public record WeeklyStatisticsCounts (
             // 마신 횟수
             Long drinkCount,
             // 총 음주량 (총 섭취 알콜 g)
-            Float totalAlcohol,
-            // 주종별 지난 주 대비 음주량
-            Float sojuThanLastWeek,
-            Float wineThanLastWeek,
-            Float beerThanLastWeek,
-            Float makgeolliThanLastWeek,
+            Float totalAlcohol
+    ) {}
+
+    @Builder
+    public record WeeklyStatisticsAverages (
             // 최근 3개월 한 주 평균 음주 빈도
             Long averageCount,
             // 최근 3개월 주종별 한 주 평균 음주량
@@ -51,16 +59,24 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record MonthlyStatistics(
+    public record MonthlyStatisticsCompared(
+            // 주종별 지난 달 대비 음주량
+            Float sojuDifference,
+            Float wineDifference,
+            Float beerDifference,
+            Float makgeolliDifference
+            ) {}
+
+    @Builder
+    public record MonthlyStatisticsCounts (
             // 마신 횟수
             Long drinkCount,
             // 총 음주량 (총 섭취 알콜 g)
-            Float totalAlcohol,
-            // 주종별 지난 달 대비 음주량
-            Float sojuThanLastMonth,
-            Float wineThanLastMonth,
-            Float beerThanLastMonth,
-            Float makgeolliThanLastMonth,
+            Float totalAlcohol
+    ) {}
+
+    @Builder
+    public record MonthlyStatisticsAverages (
             // 최근 3개월 한 달 평균 음주 빈도
             Long averageCount,
             // 최근 3개월 주종별 한 달 평균 음주량
@@ -68,7 +84,7 @@ public record UserResponse(
             Float wineAverage,
             Float beerAverage,
             Float makgeolliAverage
-            ) {}
+    ) {}
 
     @Builder
     public record HomeUserInfo(

@@ -7,8 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepositoryCustom {
     UserResponse.HomeUserInfo findHomeInfo(User user);
-
-    UserResponse.WeeklyStatistics findWeeklyStatistics(User user);
-
-    UserResponse.MonthlyStatistics findMonthlyStatistics(User user);
 }

@@ -56,6 +56,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // TODO 월 단위로 페이지네이션 추가
     public UserResponse.Home getHomeDashboardInfo(User user) {
         List<History> historyList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
@@ -83,14 +84,6 @@ public class UserService {
                 .build();
     }
 
-    public UserResponse.WeeklyStatistics getWeeklyStatisticsInfo(User user) {
-        return userRepository.findWeeklyStatistics(user);
-    }
-
-    public UserResponse.MonthlyStatistics getMonthlyStatisticsInfo(User user) {
-        return userRepository.findMonthlyStatistics(user);
-    }
-
     public String createHistory(User user, UserRequest.History request) {
         History history = History.builder()
                 .date(request.date())
@@ -105,9 +98,49 @@ public class UserService {
         return "기록 완료";
     }
 
+    public String createNoneDrinkHistory(User user, UserRequest.NoneDrinkHistory request) {
+        History history = History.builder()
+                .date(request.date())
+                .sojuConsumption(0f)
+                .wineConsumption(0f)
+                .beerConsumption(0f)
+                .makgeolliConsumption(0f)
+                .user(user)
+                .build();
+
+        historyRepository.save(history);
+        return "기록 완료";
+    }
+
+    // TODO 오류 수정
+    public UserResponse.WeeklyStatisticsCompared getWeeklyCompared(User user) {
+        return historyRepository.findWeeklyCompared(user);
+    }
+
+    // TODO 오류 수정
+    public UserResponse.WeeklyStatisticsCounts getWeeklyCount(User user) {
+        return historyRepository.findWeeklyCount(user);
+    }
+
+    public UserResponse.WeeklyStatisticsAverages getWeeklyAverage(User user) {
+        return historyRepository.findWeeklyAverage(user);
+    }
+
+    public UserResponse.MonthlyStatisticsCompared getMonthlyCompared(User user) {
+        return historyRepository.findMonthlyCompared(user);
+    }
+
+    public UserResponse.MonthlyStatisticsCounts getMonthlyCount(User user) {
+        return historyRepository.findMonthlyCount(user);
+    }
+
+    public UserResponse.MonthlyStatisticsAverages getMonthlyAverage(User user) {
+        return historyRepository.findMonthlyAverage(user);
+    }
+
     private Long calculateAlcoholFreeDays(List<History> histories) {
-        long maxStreak = 0;
-        long currentStreak = 0;
+        long maxStreak = 0L;
+        long currentStreak = 0L;
 
         for (History history : histories) {
             if (history.getSojuConsumption() == 0 && history.getWineConsumption() == 0 &&
@@ -115,7 +148,7 @@ public class UserService {
                 currentStreak++;
                 maxStreak = Math.max(maxStreak, currentStreak);
             } else {
-                currentStreak = 0;
+                currentStreak = 0L;
             }
         }
 

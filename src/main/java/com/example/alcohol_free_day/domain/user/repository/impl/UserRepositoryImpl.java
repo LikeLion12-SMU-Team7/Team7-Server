@@ -20,7 +20,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    // TODO 쿼리문 짜기
     @Override
     public UserResponse.HomeUserInfo findHomeInfo(User user) {
         QHistory history = QHistory.history;
@@ -60,15 +59,5 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .expectedCost(expectedCost)
                 .point(point)
                 .build();
-    }
-
-    @Override
-    public UserResponse.WeeklyStatistics findWeeklyStatistics(User user) {
-        return null;
-    }
-
-    @Override
-    public UserResponse.MonthlyStatistics findMonthlyStatistics(User user) {
-        return null;
     }
 }
