@@ -60,10 +60,12 @@ public class UserService {
         List<History> historyList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
+
         UserResponse.HomeUserInfo homeInfo = userRepository.findHomeInfo(user);
 
         return UserResponse.Home.builder()
                 .calendarList(calendarList)
+                .alcoholFreeDay(calculateAlcoholFreeDays(historyList))
                 .info(homeInfo)
                 .build();
     }
@@ -101,5 +103,22 @@ public class UserService {
 
         historyRepository.save(history);
         return "기록 완료";
+    }
+
+    private Long calculateAlcoholFreeDays(List<History> histories) {
+        long maxStreak = 0;
+        long currentStreak = 0;
+
+        for (History history : histories) {
+            if (history.getSojuConsumption() == 0 && history.getWineConsumption() == 0 &&
+                    history.getBeerConsumption() == 0 && history.getMakgeolliConsumption() == 0) {
+                currentStreak++;
+                maxStreak = Math.max(maxStreak, currentStreak);
+            } else {
+                currentStreak = 0;
+            }
+        }
+
+        return maxStreak;
     }
 }

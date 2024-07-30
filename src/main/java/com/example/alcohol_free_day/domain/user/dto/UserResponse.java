@@ -19,6 +19,8 @@ public record UserResponse(
     @Builder
     public record Home(
         List<Calendar> calendarList,
+        // 연속 술 없는 날
+        Long alcoholFreeDay,
         HomeUserInfo info
     ) {}
 
@@ -74,8 +76,6 @@ public record UserResponse(
             Float monthlyConsumption,
             // 이번 달 예상 지출액
             Long expectedCost,
-            // 연속 술 없는 날
-            Long alcoholFreeDays,
             // 보유 포인트
             Long point
     ) {}

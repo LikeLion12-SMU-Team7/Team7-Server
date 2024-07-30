@@ -52,20 +52,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         // 예상 지출액 계산
         Long expectedCost = (long) Math.round(monthlyConsumption * (sojuPrice + winePrice + beerPrice + makgeolliPrice));
 
-        // 연속 음주 없는 날 계산 (예시)
-//        Long alcoholFreeDays = queryFactory
-//                .select(/* TODO 연속 음주 없는 날 수 계산 로직 */)
-//                .from(history)
-//                .where(history.user.eq(user))
-//                .fetchOne();
-
         // 보유 포인트 (여기서는 User 객체에서 가져오는 것으로 가정)
         Long point = user.getPoint(); // User 객체에 포인트 필드가 있다고 가정
 
         return UserResponse.HomeUserInfo.builder()
                 .monthlyConsumption(monthlyConsumption)
                 .expectedCost(expectedCost)
-//                .alcoholFreeDays(alcoholFreeDays)
                 .point(point)
                 .build();
     }
