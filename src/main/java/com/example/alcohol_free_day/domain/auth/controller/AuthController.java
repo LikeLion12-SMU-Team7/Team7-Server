@@ -22,6 +22,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "회원가입 기능", description = "gender 값: MALE or FEMALE")
     @PostMapping("/join")
     public ApiResponse<String> join(@RequestBody JoinUserRequest request) {
         authService.register(request);
