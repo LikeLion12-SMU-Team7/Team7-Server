@@ -75,7 +75,8 @@ public class UserService {
         List<History> historyList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
-        Memory memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user);
+        Memory memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user)
+                .orElse(null);
 
 
         return UserResponse.History.builder()
