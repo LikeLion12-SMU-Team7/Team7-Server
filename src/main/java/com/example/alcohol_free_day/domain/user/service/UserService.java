@@ -15,6 +15,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -113,12 +116,10 @@ public class UserService {
         return "기록 완료";
     }
 
-    // TODO 오류 수정
     public UserResponse.WeeklyStatisticsCompared getWeeklyCompared(User user) {
         return historyRepository.findWeeklyCompared(user);
     }
 
-    // TODO 오류 수정
     public UserResponse.WeeklyStatisticsCounts getWeeklyCount(User user) {
         return historyRepository.findWeeklyCount(user);
     }

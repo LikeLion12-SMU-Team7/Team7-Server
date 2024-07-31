@@ -50,7 +50,7 @@ public record UserResponse(
     @Builder
     public record WeeklyStatisticsAverages (
             // 최근 3개월 한 주 평균 음주 빈도
-            Long averageCount,
+            Float averageFrequency,
             // 최근 3개월 주종별 한 주 평균 음주량
             Float sojuAverage,
             Float wineAverage,

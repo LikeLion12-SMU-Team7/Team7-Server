@@ -68,7 +68,7 @@ public class DashboardController {
         return ApiResponse.onSuccess(userService.getWeeklyCount(user));
     }
 
-    @Operation(summary = "주간 음주 통계 대시 보드: 최근 3개월간 한 주 평균 음주량, 주종별 한 주 평균 음주량")
+    @Operation(summary = "주간 음주 통계 대시 보드: 최근 3개월간 한 주 평균 음주 빈도, 주종별 한 주 평균 음주량")
     @GetMapping("/weekly-statistics/average")
     public ApiResponse<UserResponse.WeeklyStatisticsAverages> getWeeklyStatisticsAverages(
             @AuthenticationPrincipal User user
