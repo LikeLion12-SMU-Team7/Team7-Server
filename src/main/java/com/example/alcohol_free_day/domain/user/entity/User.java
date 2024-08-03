@@ -55,6 +55,7 @@ public class User extends BaseEntity implements UserDetails {
     public void updateProfile(UserRequest request) {
         this.nickname = request.nickname();
         this.gender = Gender.valueOf(request.gender());
+        this.sojuAmount = request.sojuAmount();
         this.birthDate = request.birthDate();
         this.weight = request.weight();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemoryRepository extends JpaRepository<Memory, Long> {
-    List<Memory> findAllByUser(User user);
+    List<Memory> findAllByUserOrderByCreatedAtDesc(User user);
 
     Optional<Memory> findTopByUserOrderByCreatedAtDesc(User user);
 }

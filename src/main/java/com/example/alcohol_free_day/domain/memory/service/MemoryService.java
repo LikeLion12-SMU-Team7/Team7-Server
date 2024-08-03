@@ -22,7 +22,7 @@ public class MemoryService {
     private final MemoryRepository memoryRepository;
 
     public List<MemoryResponse.Preview> getMemoryPreviewList(User user) {
-        List<Memory> memoryList = memoryRepository.findAllByUser(user);
+        List<Memory> memoryList = memoryRepository.findAllByUserOrderByCreatedAtDesc(user);
 
         return memoryList.stream()
                 .map(MemoryConverter::toMemoryPreview).toList();
