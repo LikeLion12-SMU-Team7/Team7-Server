@@ -6,6 +6,7 @@ import java.util.Date;
 public record UserRequest(
     String nickname,
     String gender,
+    Float sojuAmount,
     LocalDate birthDate,
     Float weight
 ) {

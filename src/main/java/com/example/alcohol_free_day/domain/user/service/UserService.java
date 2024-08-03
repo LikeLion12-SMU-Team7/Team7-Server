@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,6 +35,7 @@ public class UserService {
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .gender(String.valueOf(user.getGender()))
+                .sojuAmount(user.getSojuAmount())
                 .birthDate(user.getBirthDate())
                 .weight(user.getWeight())
                 .build();
@@ -46,6 +48,7 @@ public class UserService {
                 .email(savedUser.getEmail())
                 .nickname(savedUser.getNickname())
                 .gender(String.valueOf(savedUser.getGender()))
+                .sojuAmount(savedUser.getSojuAmount())
                 .birthDate(savedUser.getBirthDate())
                 .weight(savedUser.getWeight())
                 .build();
@@ -78,15 +81,14 @@ public class UserService {
         List<History> historyList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
-        Memory memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user)
-                .orElse(null);
-
+        Optional<Memory> memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user);
 
         return UserResponse.History.builder()
                 .calendarList(calendarList)
-                .memoryPreview(memory.getContent())
+                .memoryPreview(memory.map(Memory::getContent).orElse(null))
                 .build();
     }
+
 
     public String createHistory(User user, UserRequest.History request) {
         History history = History.builder()

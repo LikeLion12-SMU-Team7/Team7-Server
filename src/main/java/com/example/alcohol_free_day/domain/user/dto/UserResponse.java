@@ -13,6 +13,7 @@ public record UserResponse(
         String email,
         String nickname,
         String gender,
+        Float sojuAmount,
         LocalDate birthDate,
         Float weight
 ) {
