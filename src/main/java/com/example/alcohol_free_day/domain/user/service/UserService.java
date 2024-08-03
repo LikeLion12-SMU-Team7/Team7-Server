@@ -90,6 +90,13 @@ public class UserService {
 
 
     public String createHistory(User user, UserRequest.History request) {
+        if (historyRepository.existsByDate(request.date())) {
+            History history = historyRepository.findByDate(request.date());
+            history.update(request, user);
+            historyRepository.save(history);
+            return "덮어 쓰기 완료";
+        }
+
         History history = History.builder()
                 .date(request.date())
                 .sojuConsumption(request.sojuConsumption())
@@ -104,12 +111,13 @@ public class UserService {
     }
 
     public String createNoneDrinkHistory(User user, UserRequest.NoneDrinkHistory request) {
-        if(historyRepository.existsByDate(request.date())) {
+        if (historyRepository.existsByDate(request.date())) {
             History history = historyRepository.findByDate(request.date());
             history.updateNoneDrink();
             historyRepository.save(history);
-            return "기록 완료";
+            return "덮어 쓰기 완료";
         }
+
         History history = History.builder()
                 .date(request.date())
                 .sojuConsumption(0f)

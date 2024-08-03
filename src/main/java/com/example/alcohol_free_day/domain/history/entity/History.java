@@ -1,5 +1,6 @@
 package com.example.alcohol_free_day.domain.history.entity;
 
+import com.example.alcohol_free_day.domain.user.dto.UserRequest;
 import com.example.alcohol_free_day.domain.user.entity.User;
 import com.example.alcohol_free_day.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -38,5 +39,14 @@ public class History extends BaseEntity {
         this.wineConsumption = 0f;
         this.beerConsumption = 0f;
         this.makgeolliConsumption = 0f;
+    }
+
+    public void update(UserRequest.History request, User user) {
+        this.date = request.date();
+        this.sojuConsumption = request.sojuConsumption();
+        this.wineConsumption = request.wineConsumption();
+        this.beerConsumption = request.beerConsumption();
+        this.makgeolliConsumption = request.makgeolliConsumption();
+        this.user = user;
     }
 }
