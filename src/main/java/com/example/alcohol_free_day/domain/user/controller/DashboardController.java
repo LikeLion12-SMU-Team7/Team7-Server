@@ -4,6 +4,7 @@ import com.example.alcohol_free_day.domain.user.dto.UserRequest;
 import com.example.alcohol_free_day.domain.user.dto.UserResponse;
 import com.example.alcohol_free_day.domain.user.entity.User;
 import com.example.alcohol_free_day.domain.user.service.UserService;
+import com.example.alcohol_free_day.global.annotation.CheckMonth;
 import com.example.alcohol_free_day.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +22,19 @@ public class DashboardController {
     @Operation(summary = "홈 대시 보드 조회", description = "홈 화면을 조회합니다.")
     @GetMapping("/home")
     public ApiResponse<UserResponse.Home> getHomeDashboardInfo(
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @CheckMonth @RequestParam(name = "month") Integer month
             ) {
-        return ApiResponse.onSuccess(userService.getHomeDashboardInfo(user));
+        return ApiResponse.onSuccess(userService.getHomeDashboardInfo(user, month));
     }
 
     @Operation(summary = "음주 기록 대시 보드 조회", description = "음주 기록 화면을 조회합니다.")
     @GetMapping("/history")
     public ApiResponse<UserResponse.History> getHistoryDashboardInfo(
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @CheckMonth @RequestParam(name = "month") Integer month
     ) {
-        return ApiResponse.onSuccess(userService.getHistoryDashboardInfo(user));
+        return ApiResponse.onSuccess(userService.getHistoryDashboardInfo(user, month));
     }
 
     @Operation(summary = "음주 기록 대시 보드 작성", description = "음주 기록을 작성합니다.")

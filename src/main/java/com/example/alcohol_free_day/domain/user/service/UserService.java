@@ -62,9 +62,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    // TODO 월 단위로 페이지네이션 추가
-    public UserResponse.Home getHomeDashboardInfo(User user) {
-        List<History> historyList = historyRepository.findAllByUser(user);
+    public UserResponse.Home getHomeDashboardInfo(User user, Integer month) {
+        List<History> historyList = historyRepository.findAllByUserAndMonth(user, month);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
 
@@ -77,8 +76,8 @@ public class UserService {
                 .build();
     }
 
-    public UserResponse.History getHistoryDashboardInfo(User user) {
-        List<History> historyList = historyRepository.findAllByUser(user);
+    public UserResponse.History getHistoryDashboardInfo(User user, Integer month) {
+        List<History> historyList = historyRepository.findAllByUserAndMonth(user, month);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
         Optional<Memory> memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user);

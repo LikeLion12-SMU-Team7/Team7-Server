@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface HistoryRepository extends JpaRepository<History, Long>, HistoryRepositoryCustom {
     List<History> findByUserAndDateAfter(User user, Date oneWeekAgo);
 
-    List<History> findAllByUser(User user);
+    @Query("SELECT h FROM History h WHERE h.user = :user AND FUNCTION('MONTH', h.date) = :month")
+    List<History> findAllByUserAndMonth(User user, Integer month);
 }
