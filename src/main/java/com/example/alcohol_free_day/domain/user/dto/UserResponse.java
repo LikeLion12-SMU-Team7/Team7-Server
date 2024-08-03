@@ -44,8 +44,12 @@ public record UserResponse(
     public record WeeklyStatisticsCounts (
             // 마신 횟수
             Long drinkCount,
+            // 지난주 대비 마신 횟수
+            Long drinkCountDiff,
             // 총 음주량 (총 섭취 알콜 g)
-            Float totalAlcohol
+            Float totalAlcohol,
+            // 지난 주 대비 음주량 차이
+            Float totalAlcoholDiff
     ) {}
 
     @Builder
@@ -72,8 +76,12 @@ public record UserResponse(
     public record MonthlyStatisticsCounts (
             // 마신 횟수
             Long drinkCount,
-            // 총 음주량 (총 섭취 알콜 g)
-            Float totalAlcohol
+            // 지난달 대비 마신 횟수
+            Long drinkCountDiff,
+            // 총 음주량  (총 섭취 알콜 g)
+            Float totalAlcohol,
+            // 지난달 대비 음주량 차이
+            Float totalAlcoholDiff
     ) {}
 
     @Builder

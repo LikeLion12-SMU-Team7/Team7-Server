@@ -326,8 +326,10 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         Float totalAlcoholDifference = thisWeekTotalAlcohol - lastWeekTotalAlcohol;
 
         return UserResponse.WeeklyStatisticsCounts.builder()
-                .drinkCount(drinkCountDifference)
-                .totalAlcohol(totalAlcoholDifference)
+                .drinkCount(thisWeekDrinkCount)
+                .drinkCountDiff(drinkCountDifference)
+                .totalAlcohol(thisWeekTotalAlcohol)
+                .totalAlcoholDiff(totalAlcoholDifference)
                 .build();
     }
 
@@ -411,8 +413,10 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         Float totalAlcoholDifference = thisMonthTotalAlcohol - lastMonthTotalAlcohol;
 
         return UserResponse.MonthlyStatisticsCounts.builder()
-                .drinkCount(drinkCountDifference)
-                .totalAlcohol(totalAlcoholDifference)
+                .drinkCount(thisMonthDrinkCount)
+                .drinkCountDiff(drinkCountDifference)
+                .totalAlcohol(thisMonthTotalAlcohol)
+                .totalAlcoholDiff(totalAlcoholDifference)
                 .build();
     }
 
