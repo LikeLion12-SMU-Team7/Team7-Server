@@ -33,6 +33,11 @@ public record UserResponse(
 
     @Builder
     public record WeeklyStatisticsCompared(
+            // 주종별 이번 주 총 음주량
+            Float weeklySojuCount,
+            Float weeklyWineCount,
+            Float weeklyBeerCount,
+            Float weeklyMakgeolliCount,
             // 주종별 지난 주 대비 음주량
             Float sojuDifference,
             Float wineDifference,
@@ -65,6 +70,11 @@ public record UserResponse(
 
     @Builder
     public record MonthlyStatisticsCompared(
+            // 주종별 이번 달 총 음주량
+            Float monthlySojuCount,
+            Float monthlyWineCount,
+            Float monthlyBeerCount,
+            Float monthlyMakgeolliCount,
             // 주종별 지난 달 대비 음주량
             Float sojuDifference,
             Float wineDifference,
@@ -99,8 +109,10 @@ public record UserResponse(
     public record HomeUserInfo(
             // 나의 성별, 연령 적정량 (한 달 음주량)
             Float monthlyConsumption,
+            // 이번 달 주류 섭취 칼로리
+            Float monthlyCalorie,
             // 이번 달 예상 지출액
-            Long expectedCost,
+            Float expectedCost,
             // 보유 포인트
             Long point
     ) {}

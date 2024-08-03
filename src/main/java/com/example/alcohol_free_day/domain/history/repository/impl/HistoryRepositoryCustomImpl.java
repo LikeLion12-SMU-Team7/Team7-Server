@@ -39,10 +39,10 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         // 이번 주 (일요일부터 토요일까지)
         if (now.getDayOfWeek() == java.time.DayOfWeek.SUNDAY) {
             thisWeekStart = now;
-            thisWeekEnd = now.plusDays(6);
+            thisWeekEnd = now.plusDays(6).plusDays(1);
         } else {
             thisWeekStart = now.with(java.time.DayOfWeek.SUNDAY).minusDays(7);
-            thisWeekEnd = thisWeekStart.plusDays(6);
+            thisWeekEnd = thisWeekStart.plusDays(6).plusDays(1);
         }
 
         // 지난 주 (일요일부터 토요일까지)
@@ -54,6 +54,8 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         Date thisWeekEndDate = Date.from(thisWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date lastWeekStartDate = Date.from(lastWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date lastWeekEndDate = Date.from(lastWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        log.info(String.valueOf(thisWeekStartDate) + " " + String.valueOf(thisWeekEndDate));
 
         // 이번 주 음주량 계산
         Float thisWeekSoju = queryFactory
@@ -131,6 +133,10 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         float makgeolliDifference = thisWeekMakgeolli - lastWeekMakgeolli;
 
         return UserResponse.WeeklyStatisticsCompared.builder()
+                .weeklySojuCount(thisWeekSoju)
+                .weeklyWineCount(thisWeekWine)
+                .weeklyBeerCount(thisWeekBeer)
+                .weeklyMakgeolliCount(thisWeekMakgeolli)
                 .sojuDifference(sojuDifference)
                 .wineDifference(wineDifference)
                 .beerDifference(beerDifference)
@@ -233,6 +239,10 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         float makgeolliDifference = thisMonthMakgeolli - lastMonthMakgeolli;
 
         return UserResponse.MonthlyStatisticsCompared.builder()
+                .monthlySojuCount(thisMonthSoju)
+                .monthlyWineCount(thisMonthWine)
+                .monthlyBeerCount(thisMonthBeer)
+                .monthlyMakgeolliCount(thisMonthMakgeolli)
                 .sojuDifference(sojuDifference)
                 .wineDifference(wineDifference)
                 .beerDifference(beerDifference)
