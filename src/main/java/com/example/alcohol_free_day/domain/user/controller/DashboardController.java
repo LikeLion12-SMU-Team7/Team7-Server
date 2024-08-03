@@ -39,7 +39,7 @@ public class DashboardController {
 
     @Operation(summary = "음주 기록 대시 보드 작성", description = "음주 기록을 작성합니다.")
     @PostMapping("/history")
-    public ApiResponse<?> recordHistory(
+    public ApiResponse<String> recordHistory(
             @AuthenticationPrincipal User user,
             @RequestBody UserRequest.History request
             ) {

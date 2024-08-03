@@ -17,7 +17,9 @@ public interface HistoryRepository extends JpaRepository<History, Long>, History
     @Query("SELECT h FROM History h WHERE h.user = :user AND FUNCTION('MONTH', h.date) = :month")
     List<History> findAllByUserAndMonth(User user, Integer month);
 
-    boolean existsByDate(LocalDate date);
+    boolean existsByUserAndDate(User user, LocalDate date);
 
-    History findByDate(LocalDate date);
+    History findByUserAndDate(User user, LocalDate date);
+
+    List<History> findAllByUser(User user);
 }

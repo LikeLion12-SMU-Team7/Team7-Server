@@ -3,9 +3,6 @@ package com.example.alcohol_free_day.domain.user.dto;
 import lombok.Builder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -20,6 +17,8 @@ public record UserResponse(
     @Builder
     public record Home(
         List<Calendar> calendarList,
+        // 연속 기록한 날
+        Long continuousRecordDay,
         // 연속 술 없는 날
         Long alcoholFreeDay,
         HomeUserInfo info
