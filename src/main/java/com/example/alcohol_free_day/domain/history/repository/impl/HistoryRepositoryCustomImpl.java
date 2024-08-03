@@ -49,41 +49,33 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         LocalDate lastWeekStart = thisWeekStart.minusWeeks(1);
         LocalDate lastWeekEnd = thisWeekEnd.minusWeeks(1).plusDays(1);
 
-        // LocalDate를 Date로 변환
-        Date thisWeekStartDate = Date.from(thisWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date thisWeekEndDate = Date.from(thisWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastWeekStartDate = Date.from(lastWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastWeekEndDate = Date.from(lastWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        log.info(String.valueOf(thisWeekStartDate) + " " + String.valueOf(thisWeekEndDate));
-
         // 이번 주 음주량 계산
         Float thisWeekSoju = queryFactory
                 .select(history.sojuConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate)))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd)))
                 .fetchOne();
 
         Float thisWeekWine = queryFactory
                 .select(history.wineConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate)))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd)))
                 .fetchOne();
 
         Float thisWeekBeer = queryFactory
                 .select(history.beerConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate)))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd)))
                 .fetchOne();
 
         Float thisWeekMakgeolli = queryFactory
                 .select(history.makgeolliConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate)))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd)))
                 .fetchOne();
 
         // 지난 주 음주량 계산
@@ -91,28 +83,28 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.sojuConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate)))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd)))
                 .fetchOne();
 
         Float lastWeekWine = queryFactory
                 .select(history.wineConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate)))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd)))
                 .fetchOne();
 
         Float lastWeekBeer = queryFactory
                 .select(history.beerConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate)))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd)))
                 .fetchOne();
 
         Float lastWeekMakgeolli = queryFactory
                 .select(history.makgeolliConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate)))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd)))
                 .fetchOne();
 
         // Null 값 처리를 위해 0으로 초기화
@@ -157,39 +149,33 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         LocalDate lastMonthStart = thisMonthStart.minusMonths(1);
         LocalDate lastMonthEnd = thisMonthEnd.minusMonths(1);
 
-        // LocalDate를 Date로 변환
-        Date thisMonthStartDate = Date.from(thisMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date thisMonthEndDate = Date.from(thisMonthEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastMonthStartDate = Date.from(lastMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastMonthEndDate = Date.from(lastMonthEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
         // 이번 달 음주량 계산
         Float thisMonthSoju = queryFactory
                 .select(history.sojuConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate)))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd)))
                 .fetchOne();
 
         Float thisMonthWine = queryFactory
                 .select(history.wineConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate)))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd)))
                 .fetchOne();
 
         Float thisMonthBeer = queryFactory
                 .select(history.beerConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate)))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd)))
                 .fetchOne();
 
         Float thisMonthMakgeolli = queryFactory
                 .select(history.makgeolliConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate)))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd)))
                 .fetchOne();
 
         // 지난 달 음주량 계산
@@ -197,28 +183,28 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.sojuConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate)))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd)))
                 .fetchOne();
 
         Float lastMonthWine = queryFactory
                 .select(history.wineConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate)))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd)))
                 .fetchOne();
 
         Float lastMonthBeer = queryFactory
                 .select(history.beerConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate)))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd)))
                 .fetchOne();
 
         Float lastMonthMakgeolli = queryFactory
                 .select(history.makgeolliConsumption.sum())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate)))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd)))
                 .fetchOne();
 
         // Null 값 처리를 위해 0으로 초기화
@@ -272,18 +258,12 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         LocalDate lastWeekStart = thisWeekStart.minusWeeks(1);
         LocalDate lastWeekEnd = thisWeekEnd.minusWeeks(1).plusDays(1);
 
-        // LocalDate를 Date로 변환
-        Date thisWeekStartDate = Date.from(thisWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date thisWeekEndDate = Date.from(thisWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastWeekStartDate = Date.from(lastWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastWeekEndDate = Date.from(lastWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
         // 음주한 날의 횟수 계산
         Long thisWeekDrinkCount = queryFactory
                 .select(history.count())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd))
                         .and(history.sojuConsumption.gt(0f)
                                 .or(history.wineConsumption.gt(0f))
                                 .or(history.beerConsumption.gt(0f))
@@ -294,7 +274,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.date.countDistinct())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd))
                         .and(history.sojuConsumption.gt(0f)
                                 .or(history.wineConsumption.gt(0f))
                                 .or(history.beerConsumption.gt(0f))
@@ -310,7 +290,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 )
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisWeekStartDate, thisWeekEndDate)))
+                        .and(history.date.between(thisWeekStart, thisWeekEnd)))
                 .fetchOne();
 
         Float lastWeekTotalAlcohol = queryFactory
@@ -322,7 +302,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 )
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastWeekStartDate, lastWeekEndDate)))
+                        .and(history.date.between(lastWeekStart, lastWeekEnd)))
                 .fetchOne();
 
         // Null 값 처리를 위해 0으로 초기화
@@ -356,18 +336,12 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         LocalDate lastMonthStart = thisMonthStart.minusMonths(1);
         LocalDate lastMonthEnd = thisMonthEnd.minusMonths(1);
 
-        // LocalDate를 Date로 변환
-        Date thisMonthStartDate = Date.from(thisMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date thisMonthEndDate = Date.from(thisMonthEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastMonthStartDate = Date.from(lastMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date lastMonthEndDate = Date.from(lastMonthEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
         // 이번 달 음주한 날의 횟수 계산
         Long thisMonthDrinkCount = queryFactory
                 .select(history.date.countDistinct())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd))
                         .and(history.sojuConsumption.gt(0f)
                                 .or(history.wineConsumption.gt(0f))
                                 .or(history.beerConsumption.gt(0f))
@@ -379,7 +353,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.date.countDistinct())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd))
                         .and(history.sojuConsumption.gt(0f)
                                 .or(history.wineConsumption.gt(0f))
                                 .or(history.beerConsumption.gt(0f))
@@ -396,7 +370,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 )
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(thisMonthStartDate, thisMonthEndDate)))
+                        .and(history.date.between(thisMonthStart, thisMonthEnd)))
                 .fetchOne();
 
         // 지난 달 총 알코올 섭취량 계산
@@ -409,7 +383,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 )
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(lastMonthStartDate, lastMonthEndDate)))
+                        .and(history.date.between(lastMonthStart, lastMonthEnd)))
                 .fetchOne();
 
         // Null 값 처리를 위해 0으로 초기화
@@ -436,15 +410,11 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
 
         // 현재 날짜와 최근 3개월 시작일 및 종료일 계산
         LocalDate now = LocalDate.now();
-        LocalDate endOfWeek = now.with(java.time.DayOfWeek.SUNDAY);
-        LocalDate lastThreeMonthStart = now.withDayOfMonth(1).minusMonths(2);
-
-        // LocalDate를 Date로 변환
-        Date start = Date.from(lastThreeMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date end = Date.from(endOfWeek.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate end = now.with(java.time.DayOfWeek.SUNDAY);
+        LocalDate start = now.withDayOfMonth(1).minusMonths(2);
 
         // 최근 3개월 동안의 총 일 수 계산
-        long totalDays = java.time.temporal.ChronoUnit.DAYS.between(lastThreeMonthStart, endOfWeek.plusDays(1));
+        long totalDays = java.time.temporal.ChronoUnit.DAYS.between(start, end.plusDays(1));
 
         // 음주 빈도와 평균 음주량 계산
         Long totalDrinkCount = queryFactory
@@ -520,10 +490,6 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         LocalDate startOfMonth = threeMonthsAgo.withDayOfMonth(1);
         LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
 
-        // LocalDate를 Date로 변환
-        Date startOfMonthDate = Date.from(startOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date endOfMonthDate = Date.from(endOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
         // 최근 3개월 동안의 총 월 수 계산
         long totalMonths = ChronoUnit.MONTHS.between(startOfMonth, endOfMonth) + 1;
 
@@ -532,7 +498,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.date.countDistinct())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(startOfMonthDate, endOfMonthDate))
+                        .and(history.date.between(startOfMonth, endOfMonth))
                         .and(history.sojuConsumption.gt(0f)
                                 .or(history.wineConsumption.gt(0f))
                                 .or(history.beerConsumption.gt(0f))
@@ -543,28 +509,28 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
                 .select(history.sojuConsumption.avg())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(startOfMonthDate, endOfMonthDate)))
+                        .and(history.date.between(startOfMonth, endOfMonth)))
                 .fetchOne();
 
         Double wineAvgDouble = queryFactory
                 .select(history.wineConsumption.avg())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(startOfMonthDate, endOfMonthDate)))
+                        .and(history.date.between(startOfMonth, endOfMonth)))
                 .fetchOne();
 
         Double beerAvgDouble = queryFactory
                 .select(history.beerConsumption.avg())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(startOfMonthDate, endOfMonthDate)))
+                        .and(history.date.between(startOfMonth, endOfMonth)))
                 .fetchOne();
 
         Double makgeolliAvgDouble = queryFactory
                 .select(history.makgeolliConsumption.avg())
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(startOfMonthDate, endOfMonthDate)))
+                        .and(history.date.between(startOfMonth, endOfMonth)))
                 .fetchOne();
 
         // Null 값 처리 및 변환

@@ -34,12 +34,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         // 현재 날짜와 이번 달의 첫 번째 및 마지막 날 계산
         LocalDate now = LocalDate.now();
-        LocalDate thisMonthStart = now.withDayOfMonth(1);
-        LocalDate thisMonthEnd = now.withDayOfMonth(now.lengthOfMonth());
-
-        // LocalDate를 Date로 변환
-        Date start = Date.from(thisMonthStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date end = Date.from(thisMonthEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate start = now.withDayOfMonth(1);
+        LocalDate end = now.withDayOfMonth(now.lengthOfMonth());
 
         // 이번 달 음주량 계산
         Float monthlyConsumption = queryFactory

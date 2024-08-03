@@ -6,14 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface HistoryRepository extends JpaRepository<History, Long>, HistoryRepositoryCustom {
-    List<History> findByUserAndDateAfter(User user, Date oneWeekAgo);
+    List<History> findByUserAndDateAfter(User user, LocalDate oneWeekAgo);
 
     @Query("SELECT h FROM History h WHERE h.user = :user AND FUNCTION('MONTH', h.date) = :month")
     List<History> findAllByUserAndMonth(User user, Integer month);
+
+    boolean existsByDate(LocalDate date);
+
+    History findByDate(LocalDate date);
 }

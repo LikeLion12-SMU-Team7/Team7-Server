@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class HistoryService {
 
     public Float calculateAlcoholConsumption(User user) {
         // 현재 날짜 기준으로 일주일 전 날짜 계산
-        Date oneWeekAgo = new Date(System.currentTimeMillis() - 7L * 24 * 60 * 60 * 1000);
+        LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
         // 최근 일주일 간의 History 데이터 조회
         List<History> histories = historyRepository.findByUserAndDateAfter(user, oneWeekAgo);

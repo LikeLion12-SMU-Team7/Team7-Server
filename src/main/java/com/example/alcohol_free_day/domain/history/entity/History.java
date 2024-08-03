@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class History extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyId;
 
-    private Date date;
+    private LocalDate date;
 
     private Float sojuConsumption;
     private Float wineConsumption;
@@ -31,4 +32,11 @@ public class History extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void updateNoneDrink() {
+        this.sojuConsumption = 0f;
+        this.wineConsumption = 0f;
+        this.beerConsumption = 0f;
+        this.makgeolliConsumption = 0f;
+    }
 }

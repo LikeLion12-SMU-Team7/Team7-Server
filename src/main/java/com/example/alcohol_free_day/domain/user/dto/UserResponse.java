@@ -119,7 +119,7 @@ public record UserResponse(
 
     @Builder
     public record Calendar(
-            Date date,
+            LocalDate date,
             Float totalConsumption
     ) {}
 }

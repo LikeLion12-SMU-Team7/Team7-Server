@@ -12,7 +12,7 @@ public record UserRequest(
 ) {
 
     public record History(
-            Date date,
+            LocalDate date,
             Float sojuConsumption,
             Float wineConsumption,
             Float beerConsumption,
@@ -20,6 +20,6 @@ public record UserRequest(
     ) {}
 
     public record NoneDrinkHistory(
-            Date date
+            LocalDate date
     ) {}
 }
