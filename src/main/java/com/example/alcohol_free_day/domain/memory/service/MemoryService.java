@@ -37,6 +37,8 @@ public class MemoryService {
 
     public String documentMemory(User user, MemoryRequest request) {
         Memory memory = Memory.builder()
+                .createdAt(request.createdAt())
+                .modifiedAt(request.createdAt())
                 .doneWhen(request.when())
                 .doneWhere(request.where())
                 .withWho(request.withWho())

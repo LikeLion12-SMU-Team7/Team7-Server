@@ -2,7 +2,7 @@ package com.example.alcohol_free_day.domain.memory.dto;
 
 import lombok.Builder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Builder
 public record MemoryResponse() {
@@ -10,7 +10,7 @@ public record MemoryResponse() {
     @Builder
     public record Preview(
             Long memoryId,
-            LocalDateTime createdAt,
+            LocalDate createdAt,
             String content
     ) {
     }
@@ -24,7 +24,7 @@ public record MemoryResponse() {
             String how,
             String why,
             String content,
-            LocalDateTime createdAt
+            LocalDate createdAt
     ) {
     }
 }
