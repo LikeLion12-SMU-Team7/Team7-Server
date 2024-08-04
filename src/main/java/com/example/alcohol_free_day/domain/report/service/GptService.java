@@ -1,6 +1,7 @@
 package com.example.alcohol_free_day.domain.report.service;
 
 import com.example.alcohol_free_day.domain.history.service.HistoryService;
+import com.example.alcohol_free_day.domain.report.dto.ReportResponse;
 import com.example.alcohol_free_day.domain.report.entity.Report;
 import com.example.alcohol_free_day.domain.report.repository.ReportRepository;
 import com.example.alcohol_free_day.domain.user.entity.User;
@@ -65,7 +66,7 @@ public class GptService {
         return objectMapper.readTree(response.getBody());
     }
 
-    public String getAssistantMsg(User user) throws JsonProcessingException {
+    public ReportResponse getAssistantMsg(User user) throws JsonProcessingException {
 
         // 포인트 차감
         userService.chargePoints(user);
@@ -93,6 +94,18 @@ public class GptService {
                 .build();
         reportRepository.save(report);
 
-        return gptResponse;
+        return ReportResponse.builder()
+                .report(gptResponse)
+                .status("new")
+                .build();
+    }
+
+    public ReportResponse notEnoughPoint(User user) {
+        Report previousReport = reportRepository.findTopByUserOrderByCreatedAtDesc(user);
+
+        return ReportResponse.builder()
+                .report(previousReport.getContent())
+                .status("previous")
+                .build();
     }
 }

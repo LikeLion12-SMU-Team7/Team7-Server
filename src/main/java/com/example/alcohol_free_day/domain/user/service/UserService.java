@@ -66,14 +66,15 @@ public class UserService {
     }
 
     public UserResponse.HomeDto getHomeDashboardInfo(User user, Integer month) {
-        List<History> historyList = historyRepository.findAllByUserAndMonth(user, month);
+        List<History> calendarHistoryList = historyRepository.findAllByUserAndMonth(user, month);
+        List<History> thisMonthHistoryList = historyRepository.findAllByUserAndMonth(user, LocalDate.now().getMonthValue());
         List<History> totalHistoryList = historyRepository.findAllByUser(user);
-        List<UserResponse.Calendar> calendarList = historyList.stream()
+        List<UserResponse.Calendar> calendarList = calendarHistoryList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
 
         UserResponse.HomeUserInfoDto homeInfo = userRepository.findHomeInfo(user);
         Long continuousRecord = calculateContinuousRecord(totalHistoryList);
-        Long continuousAlcoholFreeDay = calculateAlcoholFreeDays(totalHistoryList);
+        Long continuousAlcoholFreeDay = calculateAlcoholFreeDays(thisMonthHistoryList);
 
         if(continuousRecord < continuousAlcoholFreeDay) {
             return UserResponse.HomeDto.builder()
@@ -185,25 +186,39 @@ public class UserService {
     }
 
     private Long calculateAlcoholFreeDays(List<History> histories) {
-        long maxStreak = 0L;
+        LocalDate today = LocalDate.now();
         long currentStreak = 0L;
 
-        for (History history : histories) {
-            if (history.getSojuConsumption() == 0 && history.getWineConsumption() == 0 &&
-                    history.getBeerConsumption() == 0 && history.getMakgeolliConsumption() == 0) {
-                currentStreak++;
-                maxStreak = Math.max(maxStreak, currentStreak);
-            } else {
-                currentStreak = 0L;
+        // 오늘 날짜부터 시작하여 연속된 금주일 계산
+        for (LocalDate date = today; !date.isBefore(today.minusDays(histories.size())); date = date.minusDays(1)) {
+            boolean hasRecord = false;
+
+            for (History history : histories) {
+                if (history.getDate().isEqual(date)) {
+                    hasRecord = true;
+
+                    // 음주 여부 체크
+                    if (history.getSojuConsumption() == 0 && history.getWineConsumption() == 0 &&
+                            history.getBeerConsumption() == 0 && history.getMakgeolliConsumption() == 0) {
+                        currentStreak++;
+                    } else {
+                        return currentStreak; // 술을 마신 날이면 연속성 리턴
+                    }
+                    break; // 해당 날짜의 기록을 찾았으므로 더 이상 반복할 필요 없음
+                }
+            }
+
+            // 해당 날짜의 기록이 없을 경우
+            if (!hasRecord) {
+                return currentStreak; // 기록이 없으면 연속성 리턴
             }
         }
 
-        return maxStreak;
+        return currentStreak; // 최대 streak 리턴
     }
-
     private Long calculateContinuousRecord(List<History> historyList) {
         // 오늘 날짜를 기준으로 시작
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now().plusDays(1);
         long continuousDays = 0;
 
         // 날짜 정렬
