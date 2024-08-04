@@ -1,5 +1,6 @@
 package com.example.alcohol_free_day.domain.user.controller;
 
+import com.example.alcohol_free_day.domain.history.dto.HistoryResponse;
 import com.example.alcohol_free_day.domain.user.dto.UserRequest;
 import com.example.alcohol_free_day.domain.user.dto.UserResponse;
 import com.example.alcohol_free_day.domain.user.entity.User;
@@ -35,6 +36,14 @@ public class DashboardController {
             @CheckMonth @RequestParam(name = "month") Integer month
     ) {
         return ApiResponse.onSuccess(userService.getHistoryDashboardInfo(user, month));
+    }
+
+    @Operation(summary = "음주 기록 대시 보드 조회: 주종 별 오늘 마신 양 조회", description = "주간, 월간 공통 API, 오늘 기록한 음주 내역을 조회합니다. 주종 별로 조회합니다.")
+    @GetMapping("/history/today")
+    public ApiResponse<HistoryResponse.TodayDto> getTodayHistory(
+            @AuthenticationPrincipal User user
+    ) {
+        return ApiResponse.onSuccess(userService.getTodayHistory(user));
     }
 
     @Operation(summary = "음주 기록 대시 보드 작성", description = "음주 기록을 작성합니다.")

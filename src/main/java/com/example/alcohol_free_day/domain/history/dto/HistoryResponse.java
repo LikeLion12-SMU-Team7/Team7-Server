@@ -4,4 +4,12 @@ import lombok.Builder;
 
 @Builder
 public record HistoryResponse() {
+
+    @Builder
+    public record TodayDto(
+            Float todaySojuConsumption,
+            Float todayWineConsumption,
+            Float todayBeerConsumption,
+            Float todayMakgeolliConsumption
+    ) {}
 }

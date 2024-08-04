@@ -1,6 +1,7 @@
 package com.example.alcohol_free_day.domain.user.service;
 
 import com.example.alcohol_free_day.domain.history.converter.HistoryConverter;
+import com.example.alcohol_free_day.domain.history.dto.HistoryResponse;
 import com.example.alcohol_free_day.domain.history.entity.History;
 import com.example.alcohol_free_day.domain.history.repository.HistoryRepository;
 import com.example.alcohol_free_day.domain.memory.entity.Memory;
@@ -105,6 +106,19 @@ public class UserService {
                 .build();
     }
 
+    public HistoryResponse.TodayDto getTodayHistory(User user) {
+        History history = historyRepository.findByUserAndDate(user, LocalDate.now());
+        if(history == null) {
+            return HistoryResponse.TodayDto.builder()
+                    .todaySojuConsumption(0f)
+                    .todayWineConsumption(0f)
+                    .todayMakgeolliConsumption(0f)
+                    .todayBeerConsumption(0f)
+                    .build();
+        }
+
+        return HistoryConverter.toTodayDto(history);
+    }
 
     public String createHistory(User user, UserRequest.History request) {
         if (historyRepository.existsByUserAndDate(user, request.date())) {

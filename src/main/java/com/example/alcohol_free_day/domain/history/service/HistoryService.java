@@ -26,18 +26,18 @@ public class HistoryService {
         List<History> histories = historyRepository.findByUserAndDateAfter(user, oneWeekAgo);
 
         // 각 알코올 종류의 병 당 알코올 양 (g)
-        final float SOJU_ALCOHOL_CONTENT = 57.2f;
-        final float WINE_ALCOHOL_CONTENT = 66.8f;
-        final float BEER_ALCOHOL_CONTENT = 12.7f;
-        final float MAKGEOLLI_ALCOHOL_CONTENT = 47.7f;
+        final float SOJU_ALCOHOL = 60.84f; // 소주 360ml, 알코올 도수 16.9%
+        final float WINE_ALCOHOL = 101.25f; // 와인 750ml, 알코올 도수 13.5%
+        final float BEER_ALCOHOL = 22.5f; // 맥주 500ml, 알코올 도수 4.5%
+        final float MAKGEOLLI_ALCOHOL = 45f; // 막걸리 750ml, 알코올 도수 6%
 
         // 각 알코올 종류의 섭취량 합산
         Float totalConsumption = histories.stream()
                 .map(history ->
-                        history.getSojuConsumption() * SOJU_ALCOHOL_CONTENT +
-                                history.getWineConsumption() * WINE_ALCOHOL_CONTENT +
-                                history.getBeerConsumption() * BEER_ALCOHOL_CONTENT +
-                                history.getMakgeolliConsumption() * MAKGEOLLI_ALCOHOL_CONTENT)
+                        history.getSojuConsumption() * SOJU_ALCOHOL +
+                                history.getWineConsumption() * WINE_ALCOHOL +
+                                history.getBeerConsumption() * BEER_ALCOHOL +
+                                history.getMakgeolliConsumption() * MAKGEOLLI_ALCOHOL)
                 .reduce(0f, Float::sum);
 
         return totalConsumption;
