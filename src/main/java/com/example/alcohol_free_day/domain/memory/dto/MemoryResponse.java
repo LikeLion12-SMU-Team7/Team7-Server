@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public record MemoryResponse() {
 
     @Builder
-    public record Preview(
+    public record PreviewDto(
             Long memoryId,
             LocalDate createdAt,
             String content
@@ -16,7 +16,7 @@ public record MemoryResponse() {
     }
 
     @Builder
-    public record Detail(
+    public record DetailDto(
             String when,
             String where,
             String withWho,

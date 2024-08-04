@@ -18,9 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,18 +65,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserResponse.Home getHomeDashboardInfo(User user, Integer month) {
+    public UserResponse.HomeDto getHomeDashboardInfo(User user, Integer month) {
         List<History> historyList = historyRepository.findAllByUserAndMonth(user, month);
         List<History> totalHistoryList = historyRepository.findAllByUser(user);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
 
-        UserResponse.HomeUserInfo homeInfo = userRepository.findHomeInfo(user);
+        UserResponse.HomeUserInfoDto homeInfo = userRepository.findHomeInfo(user);
         Long continuousRecord = calculateContinuousRecord(totalHistoryList);
         Long continuousAlcoholFreeDay = calculateAlcoholFreeDays(totalHistoryList);
 
         if(continuousRecord < continuousAlcoholFreeDay) {
-            return UserResponse.Home.builder()
+            return UserResponse.HomeDto.builder()
                     .calendarList(calendarList)
                     .continuousRecordDay(continuousRecord)
                     .alcoholFreeDay(continuousRecord)
@@ -86,7 +84,7 @@ public class UserService {
                     .build();
         }
 
-        return UserResponse.Home.builder()
+        return UserResponse.HomeDto.builder()
                 .calendarList(calendarList)
                 .continuousRecordDay(continuousRecord)
                 .alcoholFreeDay(continuousAlcoholFreeDay)
@@ -94,13 +92,13 @@ public class UserService {
                 .build();
     }
 
-    public UserResponse.History getHistoryDashboardInfo(User user, Integer month) {
+    public UserResponse.HistoryDto getHistoryDashboardInfo(User user, Integer month) {
         List<History> historyList = historyRepository.findAllByUserAndMonth(user, month);
         List<UserResponse.Calendar> calendarList = historyList.stream()
                 .map(HistoryConverter::toCalendarDto).toList();
         Optional<Memory> memory = memoryRepository.findTopByUserOrderByCreatedAtDesc(user);
 
-        return UserResponse.History.builder()
+        return UserResponse.HistoryDto.builder()
                 .calendarList(calendarList)
                 .memoryPreview(memory.map(Memory::getContent).orElse(null))
                 .build();
@@ -120,7 +118,7 @@ public class UserService {
         return HistoryConverter.toTodayDto(history);
     }
 
-    public String createHistory(User user, UserRequest.History request) {
+    public String createHistory(User user, UserRequest.HistoryDto request) {
         if (historyRepository.existsByUserAndDate(user, request.date())) {
             History history = historyRepository.findByUserAndDate(user, request.date());
             history.update(request, user);
@@ -141,7 +139,7 @@ public class UserService {
         return "기록 완료";
     }
 
-    public String createNoneDrinkHistory(User user, UserRequest.NoneDrinkHistory request) {
+    public String createNoneDrinkHistory(User user, UserRequest.NoneDrinkHistoryDto request) {
         if (historyRepository.existsByUserAndDate(user, request.date())) {
             History history = historyRepository.findByUserAndDate(user, request.date());
             history.updateNoneDrink();
@@ -162,27 +160,27 @@ public class UserService {
         return "기록 완료";
     }
 
-    public UserResponse.WeeklyStatisticsCompared getWeeklyCompared(User user) {
+    public UserResponse.WeeklyStatisticsComparedDto getWeeklyCompared(User user) {
         return historyRepository.findWeeklyCompared(user);
     }
 
-    public UserResponse.WeeklyStatisticsCounts getWeeklyCount(User user) {
+    public UserResponse.WeeklyStatisticsCountsDto getWeeklyCount(User user) {
         return historyRepository.findWeeklyCount(user);
     }
 
-    public UserResponse.WeeklyStatisticsAverages getWeeklyAverage(User user) {
+    public UserResponse.WeeklyStatisticsAveragesDto getWeeklyAverage(User user) {
         return historyRepository.findWeeklyAverage(user);
     }
 
-    public UserResponse.MonthlyStatisticsCompared getMonthlyCompared(User user) {
+    public UserResponse.MonthlyStatisticsComparedDto getMonthlyCompared(User user) {
         return historyRepository.findMonthlyCompared(user);
     }
 
-    public UserResponse.MonthlyStatisticsCounts getMonthlyCount(User user) {
+    public UserResponse.MonthlyStatisticsCountsDto getMonthlyCount(User user) {
         return historyRepository.findMonthlyCount(user);
     }
 
-    public UserResponse.MonthlyStatisticsAverages getMonthlyAverage(User user) {
+    public UserResponse.MonthlyStatisticsAveragesDto getMonthlyAverage(User user) {
         return historyRepository.findMonthlyAverage(user);
     }
 
@@ -206,20 +204,17 @@ public class UserService {
     private Long calculateContinuousRecord(List<History> historyList) {
         // 오늘 날짜를 기준으로 시작
         LocalDate today = LocalDate.now();
-        log.info("today: " + today);
-        long continuousDays = 0; // 초기값을 0으로 설정
+        long continuousDays = 0;
 
-        // 날짜를 기준으로 내림차순 정렬
+        // 날짜 정렬
         List<LocalDate> dates = historyList.stream()
                 .map(History::getDate)
                 .distinct()
                 .sorted(Collections.reverseOrder())
                 .collect(Collectors.toList());
-        log.info("sorted dates: " + dates);
 
         // 오늘 날짜부터 시작하여 연속된 날을 계산
         for (LocalDate date : dates) {
-            log.info("checking date: " + date + ", continuous days: " + continuousDays);
             if (date.equals(today)) {
                 continuousDays++; // 오늘 날짜가 포함될 때
                 today = today.minusDays(1); // 하루 전으로 이동
@@ -227,11 +222,11 @@ public class UserService {
                 continuousDays++; // 하루 전 날짜가 연속될 때
                 today = today.minusDays(1); // 하루 전으로 이동
             } else {
-                return continuousDays; // 연속된 날 수 반환
+                return continuousDays;
             }
         }
 
-        return continuousDays; // 연속된 날 수 반환
+        return continuousDays;
     }
 
 }

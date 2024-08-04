@@ -15,23 +15,23 @@ public record UserResponse(
         Float weight
 ) {
     @Builder
-    public record Home(
+    public record HomeDto(
         List<Calendar> calendarList,
         // 연속 기록한 날
         Long continuousRecordDay,
         // 연속 술 없는 날
         Long alcoholFreeDay,
-        HomeUserInfo info
+        HomeUserInfoDto info
     ) {}
 
     @Builder
-    public record History(
+    public record HistoryDto(
             List<Calendar> calendarList,
             String memoryPreview
     ) {}
 
     @Builder
-    public record WeeklyStatisticsCompared(
+    public record WeeklyStatisticsComparedDto(
             // 주종별 이번 주 총 음주량
             Float weeklySojuCount,
             Float weeklyWineCount,
@@ -45,7 +45,7 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record WeeklyStatisticsCounts (
+    public record WeeklyStatisticsCountsDto(
             // 마신 횟수
             Long drinkCount,
             // 지난주 대비 마신 횟수
@@ -57,7 +57,7 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record WeeklyStatisticsAverages (
+    public record WeeklyStatisticsAveragesDto(
             // 최근 3개월 한 주 평균 음주 빈도
             Float averageFrequency,
             // 최근 3개월 주종별 한 주 평균 음주량
@@ -68,7 +68,7 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record MonthlyStatisticsCompared(
+    public record MonthlyStatisticsComparedDto(
             // 주종별 이번 달 총 음주량
             Float monthlySojuCount,
             Float monthlyWineCount,
@@ -82,7 +82,7 @@ public record UserResponse(
             ) {}
 
     @Builder
-    public record MonthlyStatisticsCounts (
+    public record MonthlyStatisticsCountsDto(
             // 마신 횟수
             Long drinkCount,
             // 지난달 대비 마신 횟수
@@ -94,7 +94,7 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record MonthlyStatisticsAverages (
+    public record MonthlyStatisticsAveragesDto(
             // 최근 3개월 한 달 평균 음주 빈도
             Long averageCount,
             // 최근 3개월 주종별 한 달 평균 음주량
@@ -105,7 +105,7 @@ public record UserResponse(
     ) {}
 
     @Builder
-    public record HomeUserInfo(
+    public record HomeUserInfoDto(
             // 나의 성별, 연령 적정량 (한 달 음주량)
             Float monthlyConsumption,
             // 이번 달 주류 섭취 칼로리

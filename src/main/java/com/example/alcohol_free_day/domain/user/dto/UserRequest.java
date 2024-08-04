@@ -1,7 +1,6 @@
 package com.example.alcohol_free_day.domain.user.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public record UserRequest(
     String nickname,
@@ -11,7 +10,7 @@ public record UserRequest(
     Float weight
 ) {
 
-    public record History(
+    public record HistoryDto(
             LocalDate date,
             Float sojuConsumption,
             Float wineConsumption,
@@ -19,7 +18,7 @@ public record UserRequest(
             Float makgeolliConsumption
     ) {}
 
-    public record NoneDrinkHistory(
+    public record NoneDrinkHistoryDto(
             LocalDate date
     ) {}
 }

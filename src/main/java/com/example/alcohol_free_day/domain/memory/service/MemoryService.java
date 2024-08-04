@@ -21,14 +21,14 @@ public class MemoryService {
 
     private final MemoryRepository memoryRepository;
 
-    public List<MemoryResponse.Preview> getMemoryPreviewList(User user) {
+    public List<MemoryResponse.PreviewDto> getMemoryPreviewList(User user) {
         List<Memory> memoryList = memoryRepository.findAllByUserOrderByCreatedAtDesc(user);
 
         return memoryList.stream()
                 .map(MemoryConverter::toMemoryPreview).toList();
     }
 
-    public MemoryResponse.Detail getMemory(Long memoryId) {
+    public MemoryResponse.DetailDto getMemory(Long memoryId) {
         Memory memory = memoryRepository.findById(memoryId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus._NOT_FOUND_MEMORY));
 

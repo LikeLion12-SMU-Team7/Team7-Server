@@ -11,9 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,14 +19,15 @@ import java.util.Date;
 public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
-    // 각 음주 항목의 총 알코올 양 계산
-    final float SOJU_ALCOHOL = 57.2f;
-    final float WINE_ALCOHOL = 66.8f;
-    final float BEER_ALCOHOL = 12.7f;
-    final float MAKGEOLLI_ALCOHOL = 47.7f;
+
+    // 주종 별 알코올 함유량 (g 단위)
+    final float SOJU_ALCOHOL = 60.84f; // 소주 360ml, 알코올 도수 16.9%
+    final float WINE_ALCOHOL = 101.25f; // 와인 750ml, 알코올 도수 13.5%
+    final float BEER_ALCOHOL = 22.5f; // 맥주 500ml, 알코올 도수 4.5%
+    final float MAKGEOLLI_ALCOHOL = 45f; // 막걸리 750ml, 알코올 도수 6%
 
     @Override
-    public UserResponse.WeeklyStatisticsCompared findWeeklyCompared(User user) {
+    public UserResponse.WeeklyStatisticsComparedDto findWeeklyCompared(User user) {
         QHistory history = QHistory.history;
 
         // 이번 주 (일요일부터 토요일까지)
@@ -124,7 +123,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         float beerDifference = thisWeekBeer - lastWeekBeer;
         float makgeolliDifference = thisWeekMakgeolli - lastWeekMakgeolli;
 
-        return UserResponse.WeeklyStatisticsCompared.builder()
+        return UserResponse.WeeklyStatisticsComparedDto.builder()
                 .weeklySojuCount(thisWeekSoju)
                 .weeklyWineCount(thisWeekWine)
                 .weeklyBeerCount(thisWeekBeer)
@@ -137,7 +136,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
     }
 
     @Override
-    public UserResponse.MonthlyStatisticsCompared findMonthlyCompared(User user) {
+    public UserResponse.MonthlyStatisticsComparedDto findMonthlyCompared(User user) {
         QHistory history = QHistory.history;
 
         // 이번 달 (1일부터 말일까지)
@@ -224,7 +223,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         float beerDifference = thisMonthBeer - lastMonthBeer;
         float makgeolliDifference = thisMonthMakgeolli - lastMonthMakgeolli;
 
-        return UserResponse.MonthlyStatisticsCompared.builder()
+        return UserResponse.MonthlyStatisticsComparedDto.builder()
                 .monthlySojuCount(thisMonthSoju)
                 .monthlyWineCount(thisMonthWine)
                 .monthlyBeerCount(thisMonthBeer)
@@ -237,7 +236,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
     }
 
     @Override
-    public UserResponse.WeeklyStatisticsCounts findWeeklyCount(User user) {
+    public UserResponse.WeeklyStatisticsCountsDto findWeeklyCount(User user) {
         QHistory history = QHistory.history;
 
         // 이번 주 (일요일부터 토요일까지)
@@ -315,7 +314,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         Long drinkCountDifference = thisWeekDrinkCount - lastWeekDrinkCount;
         Float totalAlcoholDifference = thisWeekTotalAlcohol - lastWeekTotalAlcohol;
 
-        return UserResponse.WeeklyStatisticsCounts.builder()
+        return UserResponse.WeeklyStatisticsCountsDto.builder()
                 .drinkCount(thisWeekDrinkCount)
                 .drinkCountDiff(drinkCountDifference)
                 .totalAlcohol(thisWeekTotalAlcohol)
@@ -324,7 +323,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
     }
 
     @Override
-    public UserResponse.MonthlyStatisticsCounts findMonthlyCount(User user) {
+    public UserResponse.MonthlyStatisticsCountsDto findMonthlyCount(User user) {
         QHistory history = QHistory.history;
 
         // 현재 날짜와 이번 달의 첫 번째 및 마지막 날 계산
@@ -396,7 +395,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         Long drinkCountDifference = thisMonthDrinkCount - lastMonthDrinkCount;
         Float totalAlcoholDifference = thisMonthTotalAlcohol - lastMonthTotalAlcohol;
 
-        return UserResponse.MonthlyStatisticsCounts.builder()
+        return UserResponse.MonthlyStatisticsCountsDto.builder()
                 .drinkCount(thisMonthDrinkCount)
                 .drinkCountDiff(drinkCountDifference)
                 .totalAlcohol(thisMonthTotalAlcohol)
@@ -405,7 +404,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
     }
 
     @Override
-    public UserResponse.WeeklyStatisticsAverages findWeeklyAverage(User user) {
+    public UserResponse.WeeklyStatisticsAveragesDto findWeeklyAverage(User user) {
         QHistory history = QHistory.history;
 
         // 현재 날짜와 최근 3개월 시작일 및 종료일 계산
@@ -468,7 +467,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         // 최근 3개월 동안의 주 평균 음주 빈도 계산
         Float frequency = totalDays > 0 ? (float) totalDrinkCount / totalDays : 0f;
 
-        return UserResponse.WeeklyStatisticsAverages.builder()
+        return UserResponse.WeeklyStatisticsAveragesDto.builder()
                 .averageFrequency(frequency)
                 .sojuAverage(sojuAverage)
                 .wineAverage(wineAverage)
@@ -478,7 +477,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
     }
 
     @Override
-    public UserResponse.MonthlyStatisticsAverages findMonthlyAverage(User user) {
+    public UserResponse.MonthlyStatisticsAveragesDto findMonthlyAverage(User user) {
         QHistory history = QHistory.history;
 
         // 현재 날짜와 최근 3개월 시작일 및 종료일 계산
@@ -543,7 +542,7 @@ public class HistoryRepositoryCustomImpl implements HistoryRepositoryCustom {
         // 최근 3개월 동안의 월 평균 음주 빈도 계산
         Long averageCount = totalDrinkCount / totalMonths;
 
-        return UserResponse.MonthlyStatisticsAverages.builder()
+        return UserResponse.MonthlyStatisticsAveragesDto.builder()
                 .averageCount(averageCount)
                 .sojuAverage(sojuAverage)
                 .wineAverage(wineAverage)

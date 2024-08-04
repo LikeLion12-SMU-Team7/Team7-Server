@@ -6,15 +6,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HistoryRepositoryCustom {
-    UserResponse.WeeklyStatisticsCompared findWeeklyCompared(User user);
+    UserResponse.WeeklyStatisticsComparedDto findWeeklyCompared(User user);
 
-    UserResponse.MonthlyStatisticsCompared findMonthlyCompared(User user);
+    UserResponse.MonthlyStatisticsComparedDto findMonthlyCompared(User user);
 
-    UserResponse.WeeklyStatisticsCounts findWeeklyCount(User user);
+    UserResponse.WeeklyStatisticsCountsDto findWeeklyCount(User user);
 
-    UserResponse.MonthlyStatisticsCounts findMonthlyCount(User user);
+    UserResponse.MonthlyStatisticsCountsDto findMonthlyCount(User user);
 
-    UserResponse.WeeklyStatisticsAverages findWeeklyAverage(User user);
+    UserResponse.WeeklyStatisticsAveragesDto findWeeklyAverage(User user);
 
-    UserResponse.MonthlyStatisticsAverages findMonthlyAverage(User user);
+    UserResponse.MonthlyStatisticsAveragesDto findMonthlyAverage(User user);
 }

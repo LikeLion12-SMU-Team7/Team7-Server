@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepositoryCustom {
-    UserResponse.HomeUserInfo findHomeInfo(User user);
+    UserResponse.HomeUserInfoDto findHomeInfo(User user);
 }

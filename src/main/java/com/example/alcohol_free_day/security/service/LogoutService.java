@@ -40,13 +40,10 @@ public class LogoutService implements LogoutHandler {
                 TokenBlackList blackList = new TokenBlackList();
                 blackList.setToken(jwt);
                 tokenBlackListRepository.save(blackList);
-                System.out.println("00000000");
                 storedToken.setExpired(true);
                 storedToken.setRevoked(true);
                 tokenRepository.save(storedToken);
                 SecurityContextHolder.clearContext();
-                System.out.println("here");
-                System.out.println("Register token");
 
                 sendSuccessResponse(response);
 

@@ -5,16 +5,16 @@ import com.example.alcohol_free_day.domain.memory.entity.Memory;
 
 public class MemoryConverter {
 
-    public static MemoryResponse.Preview toMemoryPreview(Memory memory) {
-        return MemoryResponse.Preview.builder()
+    public static MemoryResponse.PreviewDto toMemoryPreview(Memory memory) {
+        return MemoryResponse.PreviewDto.builder()
                 .memoryId(memory.getMemoryId())
                 .createdAt(memory.getCreatedAt())
                 .content(memory.getContent())
                 .build();
     }
 
-    public static MemoryResponse.Detail toMemoryDetail(Memory memory) {
-        return MemoryResponse.Detail.builder()
+    public static MemoryResponse.DetailDto toMemoryDetail(Memory memory) {
+        return MemoryResponse.DetailDto.builder()
                 .when(memory.getDoneWhen())
                 .where(memory.getDoneWhere())
                 .withWho(memory.getWithWho())

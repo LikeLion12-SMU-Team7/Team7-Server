@@ -22,7 +22,7 @@ public class DashboardController {
 
     @Operation(summary = "홈 대시 보드 조회", description = "홈 화면을 조회합니다.")
     @GetMapping("/home")
-    public ApiResponse<UserResponse.Home> getHomeDashboardInfo(
+    public ApiResponse<UserResponse.HomeDto> getHomeDashboardInfo(
             @AuthenticationPrincipal User user,
             @CheckMonth @RequestParam(name = "month") Integer month
             ) {
@@ -31,7 +31,7 @@ public class DashboardController {
 
     @Operation(summary = "음주 기록 대시 보드 조회", description = "음주 기록 화면을 조회합니다.")
     @GetMapping("/history")
-    public ApiResponse<UserResponse.History> getHistoryDashboardInfo(
+    public ApiResponse<UserResponse.HistoryDto> getHistoryDashboardInfo(
             @AuthenticationPrincipal User user,
             @CheckMonth @RequestParam(name = "month") Integer month
     ) {
@@ -50,7 +50,7 @@ public class DashboardController {
     @PostMapping("/history")
     public ApiResponse<String> recordHistory(
             @AuthenticationPrincipal User user,
-            @RequestBody UserRequest.History request
+            @RequestBody UserRequest.HistoryDto request
             ) {
         return ApiResponse.onSuccess(userService.createHistory(user, request));
     }
@@ -59,14 +59,14 @@ public class DashboardController {
     @PostMapping("/history/none-drink")
     public ApiResponse<String> noneDrinkToday(
             @AuthenticationPrincipal User user,
-            @RequestBody UserRequest.NoneDrinkHistory request
+            @RequestBody UserRequest.NoneDrinkHistoryDto request
     ) {
         return ApiResponse.onSuccess(userService.createNoneDrinkHistory(user, request));
     }
 
     @Operation(summary = "주간 음주 통계 대시 보드: 주종 별 지난 주 대비 음주량")
     @GetMapping("/weekly-statistics/compared")
-    public ApiResponse<UserResponse.WeeklyStatisticsCompared> getWeeklyStatisticsInfo(
+    public ApiResponse<UserResponse.WeeklyStatisticsComparedDto> getWeeklyStatisticsInfo(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getWeeklyCompared(user));
@@ -74,7 +74,7 @@ public class DashboardController {
 
     @Operation(summary = "주간 음주 통계 대시 보드: 마신 횟수, 총 음주량(g 단위) 조회")
     @GetMapping("/weekly-statistics/count")
-    public ApiResponse<UserResponse.WeeklyStatisticsCounts> getWeeklyStatisticsCounts(
+    public ApiResponse<UserResponse.WeeklyStatisticsCountsDto> getWeeklyStatisticsCounts(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getWeeklyCount(user));
@@ -82,7 +82,7 @@ public class DashboardController {
 
     @Operation(summary = "주간 음주 통계 대시 보드: 최근 3개월간 한 주 평균 음주 빈도, 주종별 한 주 평균 음주량")
     @GetMapping("/weekly-statistics/average")
-    public ApiResponse<UserResponse.WeeklyStatisticsAverages> getWeeklyStatisticsAverages(
+    public ApiResponse<UserResponse.WeeklyStatisticsAveragesDto> getWeeklyStatisticsAverages(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getWeeklyAverage(user));
@@ -90,7 +90,7 @@ public class DashboardController {
 
     @Operation(summary = "월간 음주 통계 대시 보드: 주종 별 지난 달 대비 음주량")
     @GetMapping("/monthly-statistics/compared")
-    public ApiResponse<UserResponse.MonthlyStatisticsCompared> getMonthlyStatisticsInfo(
+    public ApiResponse<UserResponse.MonthlyStatisticsComparedDto> getMonthlyStatisticsInfo(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getMonthlyCompared(user));
@@ -98,7 +98,7 @@ public class DashboardController {
 
     @Operation(summary = "월간 음주 통계 대시 보드: 마신 횟수, 총 음주량(g 단위) 조회")
     @GetMapping("/monthly-statistics/count")
-    public ApiResponse<UserResponse.MonthlyStatisticsCounts> getMonthlyStatisticsCounts(
+    public ApiResponse<UserResponse.MonthlyStatisticsCountsDto> getMonthlyStatisticsCounts(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getMonthlyCount(user));
@@ -106,7 +106,7 @@ public class DashboardController {
 
     @Operation(summary = "월간 음주 통계 대시 보드: 최근 3개월간 한 달 평균 음주량, 주종별 한 달 평균 음주량")
     @GetMapping("/monthly-statistics/average")
-    public ApiResponse<UserResponse.MonthlyStatisticsAverages> getMonthlyStatisticsAverages(
+    public ApiResponse<UserResponse.MonthlyStatisticsAveragesDto> getMonthlyStatisticsAverages(
             @AuthenticationPrincipal User user
     ) {
         return ApiResponse.onSuccess(userService.getMonthlyAverage(user));

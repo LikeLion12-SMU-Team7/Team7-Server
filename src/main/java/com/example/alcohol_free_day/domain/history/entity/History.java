@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -41,7 +40,7 @@ public class History extends BaseEntity {
         this.makgeolliConsumption = 0f;
     }
 
-    public void update(UserRequest.History request, User user) {
+    public void update(UserRequest.HistoryDto request, User user) {
         this.date = request.date();
         this.sojuConsumption = request.sojuConsumption();
         this.wineConsumption = request.wineConsumption();

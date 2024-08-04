@@ -22,7 +22,7 @@ public class MemoryController {
 
     @Operation(summary = "흑역사 기록 목록 조회", description = "흑역사 게시글 목록을 조회합니다.")
     @GetMapping
-    public ApiResponse<List<MemoryResponse.Preview>> getMemoryPreviewList(
+    public ApiResponse<List<MemoryResponse.PreviewDto>> getMemoryPreviewList(
             @AuthenticationPrincipal User user
             ) {
         return ApiResponse.onSuccess(memoryService.getMemoryPreviewList(user));
@@ -30,7 +30,7 @@ public class MemoryController {
 
     @Operation(summary = "흑역사 상세 기록 조회", description = "흑역사 게시글을 상세 조회합니다.")
     @GetMapping("/{memory_id}")
-    public ApiResponse<MemoryResponse.Detail> getMemory(
+    public ApiResponse<MemoryResponse.DetailDto> getMemory(
             @PathVariable(name = "memory_id") Long memoryId
     ) {
         return ApiResponse.onSuccess(memoryService.getMemory(memoryId));

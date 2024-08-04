@@ -2,17 +2,13 @@ package com.example.alcohol_free_day.domain.user.repository.impl;
 
 import com.example.alcohol_free_day.domain.history.entity.QHistory;
 import com.example.alcohol_free_day.domain.user.dto.UserResponse;
-import com.example.alcohol_free_day.domain.user.entity.QUser;
 import com.example.alcohol_free_day.domain.user.entity.User;
 import com.example.alcohol_free_day.domain.user.repository.UserRepositoryCustom;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,7 +25,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     final float makgeolliKcal = 345;
 
     @Override
-    public UserResponse.HomeUserInfo findHomeInfo(User user) {
+    public UserResponse.HomeUserInfoDto findHomeInfo(User user) {
         QHistory history = QHistory.history;
 
         // 현재 날짜와 이번 달의 첫 번째 및 마지막 날 계산
@@ -45,7 +41,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         .add(history.makgeolliConsumption.sum()))
                 .from(history)
                 .where(history.user.eq(user)
-                        .and(history.date.between(start, end))) // 시작일과 종료일 설정
+                        .and(history.date.between(start, end)))
                 .fetchOne();
 
         // 이번 달 섭취 칼로리 계산
@@ -70,14 +66,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         .and(history.date.between(start, end)))
                 .fetchOne();
 
-        // 보유 포인트 (여기서는 User 객체에서 가져오는 것으로 가정)
-        Long point = user.getPoint(); // User 객체에 포인트 필드가 있다고 가정
-
-        return UserResponse.HomeUserInfo.builder()
+        return UserResponse.HomeUserInfoDto.builder()
                 .monthlyConsumption(monthlyConsumption)
                 .monthlyCalorie(monthlyKcal)
                 .expectedCost(expectedCost)
-                .point(point)
+                .point(user.getPoint())
                 .build();
     }
 }
