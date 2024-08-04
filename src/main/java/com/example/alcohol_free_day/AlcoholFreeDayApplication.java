@@ -1,10 +1,15 @@
 package com.example.alcohol_free_day;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication
+@OpenAPIDefinition(servers = {
+		@Server(url = "https://www.alcoholfreeday.site", description = "술없는날 도메인"),
+		@Server(url = "https://alcoholfreeday.site", description = "술없는날 도메인")
+})@SpringBootApplication
 @EnableJpaAuditing
 public class AlcoholFreeDayApplication {
 
