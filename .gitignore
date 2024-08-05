@@ -5,6 +5,7 @@ build/
 !/src/main//build/
 !/src/test//build/
 *.pem
+*.p12
 
 ### Qclass ###
 /src/main/generated/

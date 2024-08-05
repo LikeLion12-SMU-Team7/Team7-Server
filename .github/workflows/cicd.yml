@@ -22,6 +22,10 @@
          run: |
            mkdir -p src/main/resources
            echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
+
+       - name: Create keystore.p12
+         run: echo "${{ secrets.KEYSTORE_P12 }}" | base64 -d > src/main/resources/keystore.p12
+
        - name: Grant execute permission for gradlew
          run: chmod +x ./gradlew
 
@@ -29,10 +33,7 @@
          run: ./gradlew clean build -x test
 
        - name: Docker Image Build
-         run: |
-           echo "${{ secrets.FULLCHAIN_PEM }}" > fullchain.pem
-           echo "${{ secrets.PRIVKEY_PEM }}" > privkey.pem
-           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGENAME }} .
+         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGENAME }} .
 
        - name: Docker Hub Login
          uses: docker/login-action@v2
