@@ -44,7 +44,7 @@ public class History extends BaseEntity {
         this.date = request.date();
         this.sojuConsumption = request.sojuConsumption() / 8;
         this.wineConsumption = request.wineConsumption() / 5;
-        this.beerConsumption = request.beerConsumption() / 3;
+        this.beerConsumption = request.beerConsumption();
         this.makgeolliConsumption = request.makgeolliConsumption() / 5;
         this.user = user;
     }

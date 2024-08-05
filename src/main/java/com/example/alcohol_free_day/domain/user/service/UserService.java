@@ -134,7 +134,7 @@ public class UserService {
                 .date(request.date())
                 .sojuConsumption(request.sojuConsumption() / 8)
                 .wineConsumption(request.wineConsumption() / 5)
-                .beerConsumption(request.beerConsumption() / 3)
+                .beerConsumption(request.beerConsumption())
                 .makgeolliConsumption(request.makgeolliConsumption() / 5)
                 .user(user)
                 .build();
