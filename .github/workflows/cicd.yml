@@ -23,8 +23,8 @@
            mkdir -p src/main/resources
            echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
 
-       - name: Create keystore.p12
-         run: echo "${{ secrets.KEYSTORE_P12 }}" | base64 -d > src/main/resources/keystore.p12
+#       - name: Create keystore.p12
+#         run: echo "${{ secrets.KEYSTORE_P12 }}" | base64 -d > src/main/resources/keystore.p12
 
        - name: Grant execute permission for gradlew
          run: chmod +x ./gradlew

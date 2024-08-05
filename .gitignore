@@ -6,6 +6,7 @@ build/
 !/src/test//build/
 *.pem
 *.p12
+*.b64
 
 ### Qclass ###
 /src/main/generated/
