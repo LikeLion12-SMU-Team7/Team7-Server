@@ -18,10 +18,10 @@ public class HistoryConverter {
 
     public static HistoryResponse.TodayDto toTodayDto(History history) {
         return HistoryResponse.TodayDto.builder()
-                .todaySojuConsumption(history.getSojuConsumption())
-                .todayWineConsumption(history.getWineConsumption())
-                .todayBeerConsumption(history.getBeerConsumption())
-                .todayMakgeolliConsumption(history.getMakgeolliConsumption())
+                .todaySojuConsumption(history.getSojuConsumption() * 8)
+                .todayWineConsumption(history.getWineConsumption() * 5)
+                .todayBeerConsumption(history.getBeerConsumption() * 3)
+                .todayMakgeolliConsumption(history.getMakgeolliConsumption() * 5)
                 .build();
     }
 }
