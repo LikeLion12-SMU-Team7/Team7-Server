@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -38,12 +40,13 @@ public class DashboardController {
         return ApiResponse.onSuccess(userService.getHistoryDashboardInfo(user, month));
     }
 
-    @Operation(summary = "음주 기록 대시 보드 조회: 주종 별 오늘 마신 양 조회", description = "주간, 월간 공통 API, 오늘 기록한 음주 내역을 조회합니다. 주종 별로 조회합니다.")
+    @Operation(summary = "음주 기록 대시 보드 조회: 주종 별, 날짜 별 마신 양 조회", description = "주간, 월간 공통 API, 오늘 기록한 음주 내역을 조회합니다. 주종 별로 조회합니다. 조회하려는 날짜를 QueryString으로 입력해야 합니다. 만약 조회하려는 날짜 입력 안하면 그냥 오늘꺼 보내줌")
     @GetMapping("/history/today")
     public ApiResponse<HistoryResponse.TodayDto> getTodayHistory(
-            @AuthenticationPrincipal User user
-    ) {
-        return ApiResponse.onSuccess(userService.getTodayHistory(user));
+            @AuthenticationPrincipal User user,
+            @RequestParam(name = "date", required = false) LocalDate date
+            ) {
+        return ApiResponse.onSuccess(userService.getTodayHistory(user, date));
     }
 
     @Operation(summary = "음주 기록 대시 보드 작성", description = "음주 기록을 작성합니다.")

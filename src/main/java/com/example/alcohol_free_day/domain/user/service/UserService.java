@@ -105,8 +105,11 @@ public class UserService {
                 .build();
     }
 
-    public HistoryResponse.TodayDto getTodayHistory(User user) {
-        History history = historyRepository.findByUserAndDate(user, LocalDate.now());
+    public HistoryResponse.TodayDto getTodayHistory(User user, LocalDate date) {
+        if(date == null) {
+            date = LocalDate.now();
+        }
+        History history = historyRepository.findByUserAndDate(user, date);
         if(history == null) {
             return HistoryResponse.TodayDto.builder()
                     .todaySojuConsumption(0f)
