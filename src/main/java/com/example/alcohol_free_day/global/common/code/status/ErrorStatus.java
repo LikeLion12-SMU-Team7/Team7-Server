@@ -24,6 +24,9 @@ public enum ErrorStatus implements BaseErrorCode {
     // Memory 에러
     _NOT_FOUND_MEMORY(HttpStatus.NOT_FOUND, "MEMORY400", "흑역사가 존재하지 않습니다."),
 
+    // Report 에러
+    _NOT_FOUND_REPORT(HttpStatus.NOT_FOUND, "REPORT400", "보고서가 존재하지 않습니다."),
+
     // Security 에러
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "SEC4001", "잘못된 형식의 토큰입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "SEC4010", "인증이 필요합니다."),

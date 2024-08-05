@@ -7,6 +7,8 @@ import com.example.alcohol_free_day.domain.report.repository.ReportRepository;
 import com.example.alcohol_free_day.domain.user.entity.User;
 import com.example.alcohol_free_day.domain.user.entity.enums.Gender;
 import com.example.alcohol_free_day.domain.user.service.UserService;
+import com.example.alcohol_free_day.global.common.code.status.ErrorStatus;
+import com.example.alcohol_free_day.global.common.exception.GeneralException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -102,6 +104,13 @@ public class GptService {
 
     public ReportResponse notEnoughPoint(User user) {
         Report previousReport = reportRepository.findTopByUserOrderByCreatedAtDesc(user);
+
+        if(previousReport == null) {
+            return ReportResponse.builder()
+                    .report(null)
+                    .status("previous")
+                    .build();
+        }
 
         return ReportResponse.builder()
                 .report(previousReport.getContent())
