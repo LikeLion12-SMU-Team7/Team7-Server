@@ -10,6 +10,7 @@ public record UserRequest(
     Float weight
 ) {
 
+    // 잔 단위
     public record HistoryDto(
             LocalDate date,
             Float sojuConsumption,

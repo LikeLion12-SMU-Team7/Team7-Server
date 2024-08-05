@@ -132,10 +132,10 @@ public class UserService {
 
         History history = History.builder()
                 .date(request.date())
-                .sojuConsumption(request.sojuConsumption())
-                .wineConsumption(request.wineConsumption())
-                .beerConsumption(request.beerConsumption())
-                .makgeolliConsumption(request.makgeolliConsumption())
+                .sojuConsumption(request.sojuConsumption() / 8)
+                .wineConsumption(request.wineConsumption() / 5)
+                .beerConsumption(request.beerConsumption() / 3)
+                .makgeolliConsumption(request.makgeolliConsumption() / 5)
                 .user(user)
                 .build();
 

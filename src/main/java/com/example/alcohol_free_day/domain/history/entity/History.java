@@ -42,10 +42,10 @@ public class History extends BaseEntity {
 
     public void update(UserRequest.HistoryDto request, User user) {
         this.date = request.date();
-        this.sojuConsumption = request.sojuConsumption();
-        this.wineConsumption = request.wineConsumption();
-        this.beerConsumption = request.beerConsumption();
-        this.makgeolliConsumption = request.makgeolliConsumption();
+        this.sojuConsumption = request.sojuConsumption() / 8;
+        this.wineConsumption = request.wineConsumption() / 5;
+        this.beerConsumption = request.beerConsumption() / 3;
+        this.makgeolliConsumption = request.makgeolliConsumption() / 5;
         this.user = user;
     }
 }
