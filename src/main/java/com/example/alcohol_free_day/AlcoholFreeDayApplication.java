@@ -7,9 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @OpenAPIDefinition(servers = {
-		@Server(url = "http://localhost:8080", description = "로컬 서버"),
-		@Server(url = "https://www.alcoholfreeday.site", description = "술없는날 도메인"),
-		@Server(url = "https://alcoholfreeday.site", description = "술없는날 도메인")
+		@Server(url = "/", description = "Default Server URL")
 })@SpringBootApplication
 @EnableJpaAuditing
 public class AlcoholFreeDayApplication {
