@@ -20,7 +20,7 @@ public class HistoryConverter {
         return HistoryResponse.TodayDto.builder()
                 .todaySojuConsumption(history.getSojuConsumption() * 8)
                 .todayWineConsumption(history.getWineConsumption() * 5)
-                .todayBeerConsumption(history.getBeerConsumption() * 3)
+                .todayBeerConsumption(history.getBeerConsumption())
                 .todayMakgeolliConsumption(history.getMakgeolliConsumption() * 5)
                 .build();
     }
