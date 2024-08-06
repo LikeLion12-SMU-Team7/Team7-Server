@@ -46,8 +46,7 @@ public class AuthService {
                 .birthDate(request.birthDate())
                 .weight(request.weight())
                 .sojuAmount(request.sojuAmount())
-                //TODO 테스트용 10000포인트 -> 추후 10point로 변경
-                .point(10000L)
+                .point(10L)
                 .build();
         userRepository.save(user);
     }
